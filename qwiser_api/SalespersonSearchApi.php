@@ -537,7 +537,8 @@ class Celebros_Conversionpro_Model_SalespersonSearchApi
         }
 
         //Parse the xml file with php4 Dom parser.
-        $xml_doc= new Celebros_Conversionpro_Model_Api_DomXMLPhp4ToPhp5(__FILE__)->domxml_open_mem($xml_file);
+        $parser = new Celebros_Conversionpro_Model_Api_DomXMLPhp4ToPhp5(__FILE__);
+        $xml_doc = $parser->domxml_open_mem($xml_file);
 
         //domxml_open_mem should Return object.
         if ((!is_object($xml_doc)) && !$xml_doc)
