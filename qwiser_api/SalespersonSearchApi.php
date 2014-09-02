@@ -33,10 +33,7 @@
 
 if (!class_exists('Celebros_Conversionpro_Model_SalespersonSearchApi')) {
 
-	define('qwiser_path', plugin_dir_path( __FILE__ ));
 
-	// Includes
-	require_once( qwiser_path . 'admin_settings.php' );
 
 class Celebros_Conversionpro_Model_SalespersonSearchApi
 {
@@ -247,19 +244,12 @@ class Celebros_Conversionpro_Model_SalespersonSearchApi
     //Return all the questions
     Function GetAllQuestions()
     {
-        $lifetime = Mage::helper('conversionpro')->getRequestLifetime();
-        $cache = Mage::getModel('core/cache');
-        if (($cacheEnabled = $cache->canUse('conversionpro')) 
-        && ($result = $cache->load('conversionpro_getallquestions_' . $this->SiteKey))) {
-            $this->results = json_decode($result);
-        } else {
-            $RequestUrl = "GetAllQuestions?Sitekey=" . $this->SiteKey;
-            $RequestUrl .= "&Searchprofile=".Mage::helper('conversionpro')->getProfileName();
-            $this->results = $this->GetResult($RequestUrl,"QwiserQuestions");
-            if ($cacheEnabled) {
-                $cache->save(json_encode($this->results), 'conversionpro_getallquestions_' . $this->SiteKey, array('CONVERSIONPRO_CACHE'), $lifetime);
-            }
-        }
+		$RequestUrl = "GetAllQuestions?Sitekey=" . $this->SiteKey;
+		$RequestUrl .= "&Searchprofile=SiteDefault";
+		$this->results = $this->GetResult($RequestUrl,"QwiserQuestions");
+// 		if ($cacheEnabled) {
+// 			$cache->save(json_encode($this->results), 'conversionpro_getallquestions_' . $this->SiteKey, array('CONVERSIONPRO_CACHE'), $lifetime);
+// 		}
 
         return $this;
     }
@@ -500,20 +490,20 @@ class Celebros_Conversionpro_Model_SalespersonSearchApi
             
             //If we've enabled monitoring on Conversionpro's activity, we'll register to the db whether the curl request was 
             // successful, and in case of a few subsequent failures, we'll disable the plugin completely.
-            $helper = Mage::helper('conversionpro');
-            if ($helper->isMonitoringEnabled() && $helper->isConnectivityMonitoringEnabled()) {
-                $result = (empty($curlError)) ? true : false;
-                $helper->pushResultToMonitor('connection', $result);
-                
-                $helper->checkConversionproPulse();
-            }
+//             $helper = Mage::helper('conversionpro');
+//             if ($helper->isMonitoringEnabled() && $helper->isConnectivityMonitoringEnabled()) {
+//                 $result = (empty($curlError)) ? true : false;
+//                 $helper->pushResultToMonitor('connection', $result);
+//                 
+//                 $helper->checkConversionproPulse();
+//             }
             
             if(!empty($curlError)) {
-                Mage::throwException('get_data: ' . $curlError .' Request Url: ' . $url);
+               return new WP_Error( 'curlError', 'get_data: ' . $curlError .' Request Url: ' . $url );
             }
         }
         catch (Exception $e) {
-            Mage::logException($e);
+            new WP_Error( 'curlExcept', $e->getMessage() );
         }       
         return $data;
     }
@@ -529,7 +519,7 @@ class Celebros_Conversionpro_Model_SalespersonSearchApi
     Function GetResult($RequestUrl,$ReturnValue)
     {
         if(!$this->WebService) {
-            Mage::throwException(Mage::helper('conversionpro')->__('Conversionpro configuration error! Check saleseperson admin host general settings.'));
+           return new WP_Error( 'conversionpronotset', 'Configuration error! Check Celebros admin settings.');
         }
         
         //print $this->WebService.$RequestUrl;
@@ -547,7 +537,7 @@ class Celebros_Conversionpro_Model_SalespersonSearchApi
         }
 
         //Parse the xml file with php4 Dom parser.
-        $xml_doc= Mage::getModel('conversionpro/Api_DomXMLPhp4ToPhp5')->domxml_open_mem($xml_file);
+        $xml_doc= new Celebros_Conversionpro_Model_Api_DomXMLPhp4ToPhp5(__FILE__)->domxml_open_mem($xml_file);
 
         //domxml_open_mem should Return object.
         if ((!is_object($xml_doc)) && !$xml_doc)
@@ -574,33 +564,35 @@ class Celebros_Conversionpro_Model_SalespersonSearchApi
     //return value by xml type
     function GetReturnValue($xml_root,$ReturnValue)
     {
-        switch ($ReturnValue)
-        {
-            case "QwiserSearchResults":
-                return (new Celebros_Conversionpro_Model_Api_QwiserSearchResults($xml_root));
-                break;
-            case "String":
-                return $this->SimpleStringParser($xml_root);
-                break;
-            case "QwiserQuestions":
-                return (new Celebros_Conversionpro_Model_Api_QwiserQuestions(current($xml_root->get_elements_by_tagname("Questions"))));
-                break;
-            case "QwiserProductAnswers":
-                return (new Celebros_Conversionpro_Model_Api_QwiserProductAnswers(current($xml_root->get_elements_by_tagname("ProductAnswers"))));
-                break;
-            case "QwiserProductFields":
-                return (new Celebros_Conversionpro_Model_Api_QwiserProductFields(current($xml_root->get_elements_by_tagname("ProductFields"))));
-                break;
-            case "QwiserSearchPath":
-                return (new Celebros_Conversionpro_Model_Api_QwiserSearchPath(current($xml_root->get_elements_by_tagname("SearchPath"))));
-                break;
-            case "QwiserAnswers":
-                return (new Celebros_Conversionpro_Model_Api_QwiserAnswers(current($xml_root->get_elements_by_tagname("Answers"))));
-                break;
-            case "QwiserSimpleStringCollection":
-                return GetQwiserSimpleStringCollection(current($xml_root->get_elements_by_tagname("QwiserSimpleStringCollection")));
-                break;
-        }
+    
+    return "not yet";
+//         switch ($ReturnValue)
+//         {
+//             case "QwiserSearchResults":
+//                 return (new Celebros_Conversionpro_Model_Api_QwiserSearchResults($xml_root));
+//                 break;
+//             case "String":
+//                 return $this->SimpleStringParser($xml_root);
+//                 break;
+//             case "QwiserQuestions":
+//                 return (new Celebros_Conversionpro_Model_Api_QwiserQuestions(current($xml_root->get_elements_by_tagname("Questions"))));
+//                 break;
+//             case "QwiserProductAnswers":
+//                 return (new Celebros_Conversionpro_Model_Api_QwiserProductAnswers(current($xml_root->get_elements_by_tagname("ProductAnswers"))));
+//                 break;
+//             case "QwiserProductFields":
+//                 return (new Celebros_Conversionpro_Model_Api_QwiserProductFields(current($xml_root->get_elements_by_tagname("ProductFields"))));
+//                 break;
+//             case "QwiserSearchPath":
+//                 return (new Celebros_Conversionpro_Model_Api_QwiserSearchPath(current($xml_root->get_elements_by_tagname("SearchPath"))));
+//                 break;
+//             case "QwiserAnswers":
+//                 return (new Celebros_Conversionpro_Model_Api_QwiserAnswers(current($xml_root->get_elements_by_tagname("Answers"))));
+//                 break;
+//             case "QwiserSimpleStringCollection":
+//                 return GetQwiserSimpleStringCollection(current($xml_root->get_elements_by_tagname("QwiserSimpleStringCollection")));
+//                 break;
+//         }
     }
 
     //Checks the error node
@@ -645,7 +637,8 @@ class Celebros_Conversionpro_Model_SalespersonSearchApi
      */
     public function getMinQueryLenght()
     {
-        return Mage::getStoreConfig(self::XML_PATH_MIN_QUERY_LENGTH, $this->getStoreId());
+//         return Mage::getStoreConfig(self::XML_PATH_MIN_QUERY_LENGTH, $this->getStoreId());
+		return 3;
     }
 
     /**
@@ -665,7 +658,8 @@ class Celebros_Conversionpro_Model_SalespersonSearchApi
      */
     public function getMaxQueryLenght()
     {
-        return Mage::getStoreConfig(self::XML_PATH_MAX_QUERY_LENGTH, $this->getStoreId());
+//         return Mage::getStoreConfig(self::XML_PATH_MAX_QUERY_LENGTH, $this->getStoreId());
+		return 140;
     }
 
     /**
@@ -685,7 +679,8 @@ class Celebros_Conversionpro_Model_SalespersonSearchApi
      */
     public function getMaxQueryWords()
     {
-        return Mage::getStoreConfig(self::XML_PATH_MAX_QUERY_WORDS, $this->getStoreId());
+//         return Mage::getStoreConfig(self::XML_PATH_MAX_QUERY_WORDS, $this->getStoreId());
+			return 30;
     }
 }
 

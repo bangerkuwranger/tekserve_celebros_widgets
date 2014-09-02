@@ -16,5 +16,6 @@ define('QWISER_FILE', __FILE__);
 define('QWISER_PATH', plugin_dir_path(__FILE__));
 
 require QWISER_PATH . '/qwiser_api/SalespersonSearchApi.php';
+require QWISER_PATH . '/qwiser_api/DomXMLPhp4ToPhp5.php';
 
 $GLOBALS['QWISER'] = new Celebros_Conversionpro_Model_SalespersonSearchApi(__FILE__);
