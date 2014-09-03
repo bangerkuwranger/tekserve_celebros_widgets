@@ -1,6 +1,6 @@
 <?php
 /**
- * Celebros Qwiser - Magento Extension
+ * Celebros Qwiser - WordPress
  *
  * DISCLAIMER
  *
@@ -23,7 +23,9 @@ class Celebros_Conversionpro_Model_Api_QwiserSearchPathEntry
 		{
 			$this->AnswerIndex = $EntryNode->get_attribute("AnswerIndex");
 			$this->QuestionId = $EntryNode->get_attribute("QuestionID");
-			$this->Answers = Mage::getModel('conversionpro/Api_QwiserAnswers', current(getDomElements($EntryNode->child_nodes())));
+			$search_path_entry_answers = new Celebros_Conversionpro_Model_Api_QwiserAnswers(current(getDomElements($EntryNode->child_nodes())));
+// 			$this->Answers = Mage::getModel('conversionpro/Api_QwiserAnswers', current(getDomElements($EntryNode->child_nodes())));
+			$this->Answers = $search_path_entry_answers;
 		}
 	}
 }

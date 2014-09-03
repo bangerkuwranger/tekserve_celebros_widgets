@@ -1,6 +1,6 @@
 <?php
 /**
- * Celebros Qwiser - Magento Extension
+ * Celebros Qwiser - WordPress
  *
  * DISCLAIMER
  *
@@ -27,7 +27,9 @@ class Celebros_Conversionpro_Model_Api_QwiserConcepts
 			for ($i = 0 ; $i <= $this->Count - 1;$i++)
 			{
 				$ConceptNode = $xml_ConceptsNodes[$i];
-				$this->Items[$i] = Mage::getModel('conversionpro/Api_QwiserConcept', $ConceptNode);
+				$concepts_concept = new Celebros_Conversionpro_Model_Api_QwiserConcept($ConceptNode);
+// 				$this->Items[$i] = Mage::getModel('conversionpro/Api_QwiserConcept', $ConceptNode);
+				$this->Items[$i] = $concepts_concept;
 			}
 		}
 	}

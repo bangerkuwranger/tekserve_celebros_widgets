@@ -1,6 +1,6 @@
 <?php
 /**
- * Celebros Qwiser - Magento Extension
+ * Celebros Qwiser - WordPress
  *
  * DISCLAIMER
  *
@@ -27,7 +27,9 @@ class Celebros_Conversionpro_Model_Api_QwiserSearchPath
 			for ($i = 0 ; $i < $this->Count;$i++)
 			{
 				$SearchPathNode = $xml_SearchPathNodes[$i];
-				$this->Items[$i] = Mage::getModel('conversionpro/Api_QwiserSearchPathEntry', $SearchPathNode);
+				$search_path_search_path_entry = new Celebros_Conversionpro_Model_Api_QwiserSearchPathEntry($SearchPathNode);
+// 				$this->Items[$i] = Mage::getModel('conversionpro/Api_QwiserSearchPathEntry', $SearchPathNode);
+				$this->Items[$i] = $search_path_search_path_entry;
 			}
 		}	
 	} 

@@ -30,7 +30,7 @@
 //*require_once(dirname(dirname(__FILE__)).DS."Model".DS."Api".DS."QwiserProductFields.php");
 //require_once(dirname(dirname(__FILE__)).DS."Model".DS."Api".DS."QwiserProductField.php");
 //require_once(dirname(dirname(__FILE__)).DS."Model".DS."Api".DS."domxml-php4-to-php5.php");
-
+// 
 if (!class_exists('Celebros_Conversionpro_Model_SalespersonSearchApi')) {
 
 
@@ -62,11 +62,11 @@ class Celebros_Conversionpro_Model_SalespersonSearchApi
      * Init resource model
      *
      */
-    protected function _construct()
+    public function __construct()
     {
     	register_activation_hook(QWISER_FILE, array($this, 'activate'));
-		add_action( 'admin_init', array( $this, 'admin_init' ) );
-		add_action('admin_menu', array($this, 'add_page'));
+		add_action( 'admin_init', array( $this, 'register_option' ) );
+		add_action( 'admin_menu', array( $this, 'add_page' ) );
 		add_action( 'plugins_loaded', array( $this, 'setupAPI' ) );
     }
     
@@ -84,7 +84,7 @@ class Celebros_Conversionpro_Model_SalespersonSearchApi
 		}
     }
     
-    public function admin_init() {
+    public function register_option() {
 		register_setting('tekserve_celebros_options', $this->option_name, array($this, 'validate'));
 	}
 	
@@ -95,7 +95,7 @@ class Celebros_Conversionpro_Model_SalespersonSearchApi
 		$valid['host'] = sanitize_text_field($input['host']);
 		$valid['key'] = sanitize_text_field($input['key']);
 
-		if (strlen($valid['url_todo']) == 0) {
+		if (strlen($valid['port']) == 0) {
 			add_settings_error(
 					'port',                 	    // Setting title
 					'port_texterror',   	         // Error ID
@@ -147,9 +147,9 @@ class Celebros_Conversionpro_Model_SalespersonSearchApi
 				<?php settings_fields('tekserve_celebros_options'); ?>
 				<table class="form-table">
 					<tr valign="top"><th scope="row">Host:</th>
-						<td><input type="text" name="<?php echo $this->option_name?>[host]" value="<?php echo $options['host']; ?>" /></td>
+						<td><input type="text" size="60" name="<?php echo $this->option_name?>[host]" value="<?php echo $options['host']; ?>" /></td>
 					</tr>
-					<tr valign="top"><th scope="row">Title:</th>
+					<tr valign="top"><th scope="row">Port:</th>
 						<td><input type="text" name="<?php echo $this->option_name?>[port]" value="<?php echo $options['port']; ?>" /></td>
 					</tr>
 					<tr valign="top"><th scope="row">Key:</th>
@@ -522,9 +522,9 @@ class Celebros_Conversionpro_Model_SalespersonSearchApi
            return new WP_Error( 'conversionpronotset', 'Configuration error! Check Celebros admin settings.');
         }
         
-        //print $this->WebService.$RequestUrl;
+        print $this->WebService.$RequestUrl;
         //get xml file from url.
-        //echo $this->WebService.$RequestUrl; //exit();
+    	echo $this->WebService.$RequestUrl; //exit();
         //$xml_file = file_get_contents($this->WebService.$RequestUrl);
         $xml_file = $this->get_data($this->WebService.$RequestUrl);
     
@@ -566,34 +566,34 @@ class Celebros_Conversionpro_Model_SalespersonSearchApi
     function GetReturnValue($xml_root,$ReturnValue)
     {
     
-    return "not yet";
-//         switch ($ReturnValue)
-//         {
-//             case "QwiserSearchResults":
-//                 return (new Celebros_Conversionpro_Model_Api_QwiserSearchResults($xml_root));
-//                 break;
-//             case "String":
-//                 return $this->SimpleStringParser($xml_root);
-//                 break;
-//             case "QwiserQuestions":
-//                 return (new Celebros_Conversionpro_Model_Api_QwiserQuestions(current($xml_root->get_elements_by_tagname("Questions"))));
-//                 break;
-//             case "QwiserProductAnswers":
-//                 return (new Celebros_Conversionpro_Model_Api_QwiserProductAnswers(current($xml_root->get_elements_by_tagname("ProductAnswers"))));
-//                 break;
-//             case "QwiserProductFields":
-//                 return (new Celebros_Conversionpro_Model_Api_QwiserProductFields(current($xml_root->get_elements_by_tagname("ProductFields"))));
-//                 break;
-//             case "QwiserSearchPath":
-//                 return (new Celebros_Conversionpro_Model_Api_QwiserSearchPath(current($xml_root->get_elements_by_tagname("SearchPath"))));
-//                 break;
-//             case "QwiserAnswers":
-//                 return (new Celebros_Conversionpro_Model_Api_QwiserAnswers(current($xml_root->get_elements_by_tagname("Answers"))));
-//                 break;
-//             case "QwiserSimpleStringCollection":
-//                 return GetQwiserSimpleStringCollection(current($xml_root->get_elements_by_tagname("QwiserSimpleStringCollection")));
-//                 break;
-//         }
+//     return "not yet";
+        switch ($ReturnValue)
+        {
+            case "QwiserSearchResults":
+                return (new Celebros_Conversionpro_Model_Api_QwiserSearchResults($xml_root));
+                break;
+            case "String":
+                return $this->SimpleStringParser($xml_root);
+                break;
+            case "QwiserQuestions":
+                return (new Celebros_Conversionpro_Model_Api_QwiserQuestions(current($xml_root->get_elements_by_tagname("Questions"))));
+                break;
+            case "QwiserProductAnswers":
+                return (new Celebros_Conversionpro_Model_Api_QwiserProductAnswers(current($xml_root->get_elements_by_tagname("ProductAnswers"))));
+                break;
+            case "QwiserProductFields":
+                return (new Celebros_Conversionpro_Model_Api_QwiserProductFields(current($xml_root->get_elements_by_tagname("ProductFields"))));
+                break;
+            case "QwiserSearchPath":
+                return (new Celebros_Conversionpro_Model_Api_QwiserSearchPath(current($xml_root->get_elements_by_tagname("SearchPath"))));
+                break;
+            case "QwiserAnswers":
+                return (new Celebros_Conversionpro_Model_Api_QwiserAnswers(current($xml_root->get_elements_by_tagname("Answers"))));
+                break;
+            case "QwiserSimpleStringCollection":
+                return GetQwiserSimpleStringCollection(current($xml_root->get_elements_by_tagname("QwiserSimpleStringCollection")));
+                break;
+        }
     }
 
     //Checks the error node

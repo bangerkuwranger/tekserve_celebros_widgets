@@ -1,6 +1,6 @@
 <?php
 /**
- * Celebros Conversion Pro - Magento Extension
+ * Celebros Conversion Pro - Wordpress
  *
  * DISCLAIMER
  *

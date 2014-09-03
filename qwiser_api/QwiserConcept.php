@@ -1,6 +1,6 @@
 <?php
 /**
- * Celebros Qwiser - Magento Extension
+ * Celebros Qwiser - WordPress
  *
  * DISCLAIMER
  *

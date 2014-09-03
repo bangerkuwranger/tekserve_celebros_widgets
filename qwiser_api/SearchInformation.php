@@ -1,6 +1,6 @@
 <?php
 /**
- * Celebros Conversion Pro - Magento Extension
+ * Celebros Conversion Pro - WordPress
  *
  * DISCLAIMER
  *
@@ -50,9 +50,15 @@ class Celebros_Conversionpro_Model_Api_SearchInformation
 			$this->FirstQuestionId = $xml_SearchInformation->get_attribute("FirstQuestionId");
 			$this->SessionId = $xml_SearchInformation->get_attribute("SessionId");
 			$this->Stage = $xml_SearchInformation->get_attribute("Stage");
-			$this->SortingOptions = Mage::getModel('conversionpro/Api_SortingOptions', current($xml_SearchInformation->get_elements_by_tagname("SortingOptions")));
-			$this->AnsweredAnswers = Mage::getModel('conversionpro/Api_QwiserAnsweredAnswers', current($xml_SearchInformation->get_elements_by_tagname("AnsweredAnswers")));
-			$this->SpecialCasesDetectedInThisSession = Mage::getModel('conversionpro/Api_SpecialCasesDetectedInThisSession', current($xml_SearchInformation->get_elements_by_tagname("SpecialCasesDetectedInThisSession")));
+			$search_information_sorting_options = new Celebros_Conversionpro_Model_Api_SortingOptions(current($xml_SearchInformation->get_elements_by_tagname("SortingOptions")));
+// 			$this->SortingOptions = Mage::getModel('conversionpro/Api_SortingOptions', current($xml_SearchInformation->get_elements_by_tagname("SortingOptions")));
+			$this->SortingOptions = $search_information_sorting_options;
+			$search_information_answered_answers = new Celebros_Conversionpro_Model_Api_QwiserAnsweredAnswers(current($xml_SearchInformation->get_elements_by_tagname("AnsweredAnswers")));
+// 			$this->AnsweredAnswers = Mage::getModel('conversionpro/Api_QwiserAnsweredAnswers', current($xml_SearchInformation->get_elements_by_tagname("AnsweredAnswers")));
+			$this->AnsweredAnswers = $search_information_answered_answers;
+			$search_information_special_cases = new Celebros_Conversionpro_Model_Api_SpecialCasesDetectedInThisSession(current($xml_SearchInformation->get_elements_by_tagname("SpecialCasesDetectedInThisSession")));
+// 			$this->SpecialCasesDetectedInThisSession = Mage::getModel('conversionpro/Api_SpecialCasesDetectedInThisSession', current($xml_SearchInformation->get_elements_by_tagname("SpecialCasesDetectedInThisSession")));
+			$this->SpecialCasesDetectedInThisSession = $search_information_special_cases;
 		}
 	}
 	

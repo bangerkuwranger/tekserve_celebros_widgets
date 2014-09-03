@@ -1,6 +1,6 @@
 <?php
 /**
- * Celebros Qwiser - Magento Extension
+ * Celebros Qwiser - WordPress
  *
  * DISCLAIMER
  *
@@ -36,7 +36,9 @@ Class Celebros_Conversionpro_Model_Api_QwiserAnswers
 				for ($i = 0 ; $i <= $this->Count - 1;$i++)
 				{
 					$AnswerNode = $xml_AnswersNodes[$i];
-					$this->Items[$i] = Mage::getModel('conversionpro/Api_QwiserAnswer', $AnswerNode);
+					$answers_answer = new Celebros_Conversionpro_Model_Api_QwiserAnswer($AnswerNode);
+// 					$this->Items[$i] = Mage::getModel('conversionpro/Api_QwiserAnswer', $AnswerNode);
+					$this->Items[$i] = $answers_answer;
 				}
 			}
 		}
@@ -65,7 +67,9 @@ Class Celebros_Conversionpro_Model_Api_QwiserAnswers
 				$ansArray[] = $Ans;	
 			}
 		}
-		return Mage::getModel('conversionpro/Api_QwiserAnswer', $ansArray);
+		$answers_answer_bytext = new Celebros_Conversionpro_Model_Api_QwiserAnswer($ansArray);
+// 		return Mage::getModel('conversionpro/Api_QwiserAnswer', $ansArray);
+		return $answers_answer_bytext;
 	}
 	
 	//Gets a QwiserAnswers object of all answers in this collection that are of the specified type
@@ -79,7 +83,9 @@ Class Celebros_Conversionpro_Model_Api_QwiserAnswers
 				$ansArray[] = $Ans;
 			}
 		}	
-		return Mage::getModel('conversionpro/Api_QwiserAnswer', $ansArray);
+		$answers_answer_bytype = new Celebros_Conversionpro_Model_Api_QwiserAnswer($ansArray);
+// 		return Mage::getModel('conversionpro/Api_QwiserAnswer', $ansArray);
+		return $answers_answer_bytype;
 	}
 	
 	//Sorts This QwiserAnswers collection with CompareTo method. 

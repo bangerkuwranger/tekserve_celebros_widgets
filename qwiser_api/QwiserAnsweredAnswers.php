@@ -1,6 +1,6 @@
 <?php
 /**
- * Celebros Qwiser - Magento Extension
+ * Celebros Qwiser - WordPress
  *
  * DISCLAIMER
  *
@@ -37,7 +37,9 @@ Class Celebros_Conversionpro_Model_Api_QwiserAnsweredAnswers
 				{
 					$AnsweredAnswerNode = $xml_AnsweredAnswersNodes[$i];
 					$key = $AnsweredAnswerNode->get_attribute("AnswerID");
-					$this->Items[$key] = Mage::getModel('conversionpro/Api_QwiserAnsweredAnswer', $AnsweredAnswerNode);
+					$answered_answers_answered_answer = new Celebros_Conversionpro_Model_Api_QwiserAnsweredAnswer($AnsweredAnswerNode);
+// 					$this->Items[$key] = Mage::getModel('conversionpro/Api_QwiserAnsweredAnswer', $AnsweredAnswerNode);
+					$this->Items[$key] = $answered_answers_answered_answer;
 				}
 			}
 		}

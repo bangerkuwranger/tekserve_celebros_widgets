@@ -1,6 +1,6 @@
 <?php
 /**
- * Celebros Qwiser - Magento Extension
+ * Celebros Qwiser - WordPress
  *
  * DISCLAIMER
  *
@@ -32,8 +32,12 @@ class Celebros_Conversionpro_Model_Api_QwiserQuestion
 			$this->SideText = $QuestionNode->get_attribute("SideText");
 			$this->Text	= $QuestionNode->get_attribute("Text");
 			$this->Type = $QuestionNode->get_attribute("Type");
-			$this->Answers = Mage::getModel('conversionpro/Api_QwiserAnswers', current($QuestionNode->get_elements_by_tagname("Answers")));
-			$this->ExtraAnswers = Mage::getModel('conversionpro/Api_QwiserAnswers', current($QuestionNode->get_elements_by_tagname("ExtraAnswers")));
+			$question_answers = new Celebros_Conversionpro_Model_Api_QwiserAnswers(current($QuestionNode->get_elements_by_tagname("Answers")));
+// 			$this->Answers = Mage::getModel('conversionpro/Api_QwiserAnswers', current($QuestionNode->get_elements_by_tagname("Answers")));
+			$this->Answers = $question_answers;
+			$question_extra_answers = new Celebros_Conversionpro_Model_Api_QwiserAnswers(current($QuestionNode->get_elements_by_tagname("extraAnswers")));
+// 			$this->ExtraAnswers = Mage::getModel('conversionpro/Api_QwiserAnswers', current($QuestionNode->get_elements_by_tagname("ExtraAnswers")));
+			$this->ExtraAnswers = $question_extra_answers;
 			$this->HasMoreAnswers = ($this->ExtraAnswers->Count > 0) ? true : false;
 			
 			//Question dynamic properties

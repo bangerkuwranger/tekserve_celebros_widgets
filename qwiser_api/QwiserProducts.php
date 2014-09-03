@@ -1,6 +1,6 @@
 <?php
 /**
- * Celebros Qwiser - Magento Extension
+ * Celebros Qwiser - WordPress
  *
  * DISCLAIMER
  *
@@ -29,7 +29,9 @@ class Celebros_Conversionpro_Model_Api_QwiserProducts
 			{
 				$ProdNode = $xml_productsNodes[$i];
 				
-				$this->Items[$i] = Mage::getModel('conversionpro/Product', $ProdNode);
+				$products_product = new Celebros_Conversionpro_Model_Api_QwiserProduct($ProdNode);
+// 				$this->Items[$i] = Mage::getModel('conversionpro/Product', $ProdNode);
+				$this->Items[$i] = $products_product;
 				
 			}
 		}
