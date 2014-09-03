@@ -12,12 +12,15 @@ License: MIT
 // don't load directly
 if ( ! defined( 'ABSPATH' ) ) die( '-1' );
 
+//global vars
 define('QWISER_FILE', __FILE__);
 define('QWISER_PATH', plugin_dir_path(__FILE__));
 
+//include api files
 require_once(QWISER_PATH . "/qwiser_api/SalespersonSearchApi.php");
 require_once(QWISER_PATH . "/qwiser_api/DomXMLPhp4ToPhp5.php");
 require_once(QWISER_PATH . "/qwiser_api/SearchInformation.php");
+require_once(QWISER_PATH . "/qwiser_api/SpecialCasesDetectedInThisSession.php");
 require_once(QWISER_PATH . "/qwiser_api/QwiserSearchResults.php");
 require_once(QWISER_PATH . "/qwiser_api/QwiserProducts.php");
 require_once(QWISER_PATH . "/qwiser_api/QwiserProduct.php");
@@ -26,6 +29,8 @@ require_once(QWISER_PATH . "/qwiser_api/QwiserQuestions.php");
 require_once(QWISER_PATH . "/qwiser_api/QwiserQuestion.php");
 require_once(QWISER_PATH . "/qwiser_api/QwiserAnswers.php");
 require_once(QWISER_PATH . "/qwiser_api/QwiserAnswer.php");
+require_once(QWISER_PATH . "/qwiser_api/QwiserAnsweredAnswers.php");
+require_once(QWISER_PATH . "/qwiser_api/QwiserAnsweredAnswer.php");
 require_once(QWISER_PATH . "/qwiser_api/QwiserSearchPath.php");
 require_once(QWISER_PATH . "/qwiser_api/QwiserSearchPathEntry.php");
 require_once(QWISER_PATH . "/qwiser_api/QwiserSpellerInformation.php");
@@ -36,4 +41,8 @@ require_once(QWISER_PATH . "/qwiser_api/QwiserProductAnswer.php");
 require_once(QWISER_PATH . "/qwiser_api/QwiserProductFields.php");
 require_once(QWISER_PATH . "/qwiser_api/QwiserProductField.php");
 
+//define new api obj instance and add to globals
 $GLOBALS['QWISER'] = new Celebros_Conversionpro_Model_SalespersonSearchApi(__FILE__);
+
+//include file to create testing panel
+require_once(QWISER_PATH . "tekserve-celebros-test-panel.php");

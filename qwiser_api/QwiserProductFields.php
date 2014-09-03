@@ -1,6 +1,6 @@
 <?php
 /**
- * Celebros Qwiser - Magento Extension
+ * Celebros Qwiser - WordPress
  *
  * DISCLAIMER
  *
@@ -27,7 +27,9 @@ class Celebros_Conversionpro_Model_Api_QwiserProductFields
 			for ($i = 0 ; $i <= $this->Count - 1;$i++)
 			{
 				$ProductFieldNode = $xml_ProductFieldsNodes[$i];
-				$this->Items[$i] = Mage::getModel('conversionpro/Api_QwiserProductField', $ProductFieldNode);
+				$product_fields_product_field = new Celebros_Conversionpro_Model_Api_QwiserProductField($ProductFieldNode);
+// 				$this->Items[$i] = Mage::getModel('conversionpro/Api_QwiserProductField', $ProductFieldNode);
+				$this->Items[$i] = $product_fields_product_field;
 			}
 		}	
 	}

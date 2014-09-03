@@ -42,7 +42,7 @@ class Celebros_Conversionpro_Model_SalespersonSearchApi
 	protected $option_name = 'tekserve_celebros';
 
 	// Default values
-	protected $option_data = array(
+	public $option_data = array(
 		'port'	=> '6035',
 		'host'	=> 'tekserve-search.celebros.com',
 		'key'	=> 'tekserve'
@@ -522,9 +522,13 @@ class Celebros_Conversionpro_Model_SalespersonSearchApi
            return new WP_Error( 'conversionpronotset', 'Configuration error! Check Celebros admin settings.');
         }
         
-        print $this->WebService.$RequestUrl;
+//test response from server
+//      print $this->WebService.$RequestUrl;
         //get xml file from url.
-    	echo $this->WebService.$RequestUrl; //exit();
+//     	echo $this->WebService.$RequestUrl; 
+//     	exit();
+//end test response from server
+    	
         //$xml_file = file_get_contents($this->WebService.$RequestUrl);
         $xml_file = $this->get_data($this->WebService.$RequestUrl);
     
