@@ -11,26 +11,7 @@
  * @package     Celebros_Conversionpro
  *
  */
-//require_once(dirname(dirname(__FILE__)).DS."Model".DS."Api".DS."SearchInformation.php");
-//*require_once(dirname(dirname(__FILE__)).DS."Model".DS."Api".DS."QwiserSearchResults.php");
-//require_once(dirname(dirname(__FILE__)).DS."Model".DS."Api".DS."QwiserProducts.php");
-//*require_once(dirname(dirname(__FILE__)).DS."Model".DS."Api".DS."QwiserProduct.php");
-//require_once(dirname(dirname(__FILE__)).DS."Model".DS."Api".DS."SortingOptions.php");
-//require_once(dirname(dirname(__FILE__)).DS."Model".DS."Api".DS."QwiserQuestions.php");
-//require_once(dirname(dirname(__FILE__)).DS."Model".DS."Api".DS."QwiserQuestion.php");
-//require_once(dirname(dirname(__FILE__)).DS."Model".DS."Api".DS."QwiserAnswers.php");
-//require_once(dirname(dirname(__FILE__)).DS."Model".DS."Api".DS."QwiserAnswer.php");
-//require_once(dirname(dirname(__FILE__)).DS."Model".DS."Api".DS."QwiserSearchPath.php");
-//require_once(dirname(dirname(__FILE__)).DS."Model".DS."Api".DS."QwiserSearchPathEntry.php");
-//require_once(dirname(dirname(__FILE__)).DS."Model".DS."Api".DS."QwiserSpellerInformation.php");
-//require_once(dirname(dirname(__FILE__)).DS."Model".DS."Api".DS."QwiserConcepts.php");
-//require_once(dirname(dirname(__FILE__)).DS."Model".DS."Api".DS."QwiserConcept.php");
-//*require_once(dirname(dirname(__FILE__)).DS."Model".DS."Api".DS."QwiserProductAnswers.php");
-//require_once(dirname(dirname(__FILE__)).DS."Model".DS."Api".DS."QwiserProductAnswer.php");
-//*require_once(dirname(dirname(__FILE__)).DS."Model".DS."Api".DS."QwiserProductFields.php");
-//require_once(dirname(dirname(__FILE__)).DS."Model".DS."Api".DS."QwiserProductField.php");
-//require_once(dirname(dirname(__FILE__)).DS."Model".DS."Api".DS."domxml-php4-to-php5.php");
-// 
+
 if (!class_exists('Celebros_Conversionpro_Model_SalespersonSearchApi')) {
 
 
@@ -134,7 +115,7 @@ class Celebros_Conversionpro_Model_SalespersonSearchApi
 	
 	// Add entry in the settings menu
 	public function add_page() {
-		add_options_page('Celebros Options', 'Celebros Options', 'manage_options', 'tekserve_celebros_options', array($this, 'options_do_page'));
+		add_options_page('Celebros API', 'Celebros API', 'manage_options', 'tekserve_celebros_options', array($this, 'options_do_page'));
 	}
 	
 	// Output the options page

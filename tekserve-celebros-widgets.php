@@ -44,5 +44,8 @@ require_once(QWISER_PATH . "/qwiser_api/QwiserProductField.php");
 //define new api obj instance and add to globals
 $GLOBALS['QWISER'] = new Celebros_Conversionpro_Model_SalespersonSearchApi(__FILE__);
 
-//include file to create testing panel
-require_once(QWISER_PATH . "tekserve-celebros-test-panel.php");
+//include file to create additional post fields
+require_once(QWISER_PATH . "tekserve-celebros-widget-fields.php");
+
+//include file to create admin menu
+require_once(QWISER_PATH . "tekserve-celebros-menu.php");
