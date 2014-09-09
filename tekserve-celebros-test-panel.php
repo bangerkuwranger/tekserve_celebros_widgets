@@ -1,14 +1,6 @@
 <?php
 //Panel for testing API responses
 
-//create top level options menus in admin
-add_action( 'admin_menu', 'tekserve_celebros_test_panel_menu' );
-
-//generates the menu for test panel
-function tekserve_celebros_test_panel_menu() {
-	add_menu_page( 'Test Celebros', 'Test Celebros', 'edit_published_pages', 'tekserve_celebros_test_panel_menu', 'tekserve_celebros_test_panel_menu_page', 'dashicons-search', '8.217' );
-	add_submenu_page( 'tekserve_celebros_test_panel_menu', 'Tekserve Celebros Functions', 'Tekserve Celebros Functions', 'edit_published_pages', 'tekserve_celebros_test_panel_menu', 'tekserve_celebros_test_panel_menu_page');
-}
 
 //generates html for the test panel menu page
 function tekserve_celebros_test_panel_menu_page( $handle = NULL, $operation = NULL ) {
@@ -225,7 +217,7 @@ function tekserve_celebros_test_panel_menu_page( $handle = NULL, $operation = NU
 	
 	<script type="text/javascript">
 		function visibleFields(operation) {
-			alert('changed to: ' + operation);
+// 			alert('changed to: ' + operation);
 			switch(operation) {
 				case "Search" :
 					jQuery('.hidden-fields select, .hidden-fields label, .hidden-fields input').hide().prop('readonly', true);
@@ -322,13 +314,13 @@ function tekserve_celebros_test_panel_menu_page( $handle = NULL, $operation = NU
 		 				<div class="product-field">
 		 					<b><?php echo $field ?>:</b>
 		 					<br/> 
-		 					<a href="<?php echo $value ?>" target="_blank"><?php echo $value ?></a>
+		 					<a href="<?php echo str_replace( 'tekserve.corrastage.com', 'shop.tekserve.com', $value ) ?>" target="_blank"><?php echo $value ?></a>
 		 				</div>
 		 				<?php elseif( $field == "thumbnail" || $field == "image_link" || $field == "small_image" ): ?>
 		 				<div class="product-field">
 		 					<b><?php echo $field ?>:</b>
 		 					<br/> 
-		 					<a href="<?php echo $value ?>" target="_blank"><img src="<?php echo $value ?>" /><br/><?php echo $value ?></a>
+		 					<a href="<?php echo str_replace( 'cdn.tekserve.corrastage.com', 'shop.tekserve.com', $value ) ?>" target="_blank"><img src="<?php echo str_replace( 'cdn.tekserve.corrastage.com', 'shop.tekserve.com', $value ) ?>" /><br/><?php echo $value ?></a>
 		 				</div>
 		 				<?php else: ?>
 		 				<div class="product-field">
