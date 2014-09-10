@@ -15,6 +15,10 @@ if ( ! defined( 'ABSPATH' ) ) die( '-1' );
 //global vars
 define('QWISER_FILE', __FILE__);
 define('QWISER_PATH', plugin_dir_path(__FILE__));
+define('QWISER_URL', plugin_dir_url(__FILE__));
+
+//define text domain
+load_plugin_textdomain('tekserve_celebros_widgets');
 
 //include api files
 require_once(QWISER_PATH . "/qwiser_api/SalespersonSearchApi.php");
@@ -49,3 +53,6 @@ require_once(QWISER_PATH . "tekserve-celebros-widget-fields.php");
 
 //include file to create admin menu
 require_once(QWISER_PATH . "tekserve-celebros-menu.php");
+
+//include file to register widget class
+require_once(QWISER_PATH . "widgets.php");

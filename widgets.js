@@ -1,0 +1,1 @@
+//Creates AJAX requests to populate content in widget structure
