@@ -55,4 +55,4 @@ require_once(QWISER_PATH . "tekserve-celebros-widget-fields.php");
 require_once(QWISER_PATH . "tekserve-celebros-menu.php");
 
 //include file to register widget class
-require_once(QWISER_PATH . "widgets.php");
+require_once(QWISER_PATH . "tekserve-celebros-widget-class.php");

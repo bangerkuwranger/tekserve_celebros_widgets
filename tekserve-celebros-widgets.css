@@ -1,0 +1,15 @@
+.tekserve_celebros_loading {
+	display: none;
+	text-align: center;
+}
+
+.tekserve_celebros_loading img {
+	min-height: 10px;
+	height: auto;
+	min-width: 25%;
+	padding: 1em 0;
+}
+
+.tekserve-celebros-related-items-single {
+	display: none;
+}

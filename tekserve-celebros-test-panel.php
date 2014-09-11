@@ -6,7 +6,6 @@
 function tekserve_celebros_test_panel_menu_page( $handle = NULL, $operation = NULL ) {
 	global $wpdb;
 	$api = $GLOBALS['QWISER'];
-// 	var_dump($_POST);
 	if ( ! empty( $_POST ) && check_admin_referer( 'performoperation', 'celebrostestpanel' ) ) {
 		echo "POST: <br/>";
 		$q = (isset($_POST['celebros_search_query'])) ? sanitize_text_field( $_POST['celebros_search_query'] ) : NULL;
@@ -22,61 +21,51 @@ function tekserve_celebros_test_panel_menu_page( $handle = NULL, $operation = NU
 				$results = $api->Search($q)->results;
 				$handle = $results->GetSearchHandle();
 				$searchinfo = $results->SearchInformation;
-				var_dump($searchinfo);
 				break;
 			case "ActivateProfile":
 				$results = $api->ActivateProfile($oldhandle, $newprofile)->results;
 				$handle = $results->GetSearchHandle();
 				$searchinfo = $results->SearchInformation;
-				var_dump($searchinfo);
 				break;
 			case "ChangePageSize":
 				$results = $api->ChangePageSize($oldhandle, $newpagesize)->results;
 				$handle = $results->GetSearchHandle();
 				$searchinfo = $results->SearchInformation;
-				var_dump($searchinfo);
 				break;
 			case "FirstPage":
 				$results = $api->FirstPage($oldhandle)->results;
 				$handle = $results->GetSearchHandle();
 				$searchinfo = $results->SearchInformation;
-				var_dump($searchinfo);
 				break;
 			case "LastPage":
 				$results = $api->LastPage($oldhandle)->results;
 				$handle = $results->GetSearchHandle();
 				$searchinfo = $results->SearchInformation;
-				var_dump($searchinfo);
 				break;
 			case "PreviousPage":
 				$results = $api->PreviousPage($oldhandle)->results;
 				$handle = $results->GetSearchHandle();
 				$searchinfo = $results->SearchInformation;
-				var_dump($searchinfo);
 				break;
 			case "NextPage":
 				$results = $api->NextPage($oldhandle)->results;
 				$handle = $results->GetSearchHandle();
 				$searchinfo = $results->SearchInformation;
-				var_dump($searchinfo);
 				break;
 			case "SortByField":
 				$results = $api->SortByField($oldhandle, $sortfield, false, $newsortdir)->results;
 				$handle = $results->GetSearchHandle();
 				$searchinfo = $results->SearchInformation;
-				var_dump($searchinfo);
 				break;
 			case "SortByPrice":
 				$results = $api->SortByPrice($oldhandle, $newsortdir)->results;
 				$handle = $results->GetSearchHandle();
 				$searchinfo = $results->SearchInformation;
-				var_dump($searchinfo);
 				break;
 			case "SortByRelevancy":
 				$results = $api->SortByRelevancy($oldhandle)->results;
 				$handle = $results->GetSearchHandle();
 				$searchinfo = $results->SearchInformation;
-				var_dump($searchinfo);
 				break;
 		}
 	
@@ -302,8 +291,6 @@ function tekserve_celebros_test_panel_menu_page( $handle = NULL, $operation = NU
 	<?php if( isset( $api->results ) || isset( $results ) ): ?>
 	<h3>Results:</h3>
 	<div class="api-results">
-		<?php //print_r($api) ?>
-		 <?php //debug_print_backtrace(); ?>
 		 <?php  
 		 foreach( $results->Products->Items as $product ): ?>
 		 	<div class="product">
