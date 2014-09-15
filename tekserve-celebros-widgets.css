@@ -13,3 +13,51 @@
 .tekserve-celebros-related-items-single {
 	display: none;
 }
+
+p.tekserve-celebros-related-items-section-title {
+	margin: 1em 0 .25em;
+}
+
+p.tekserve-celebros-related-items-section-title strong {
+	font-weight: bold;
+	font-size: 1.5em;
+	padding-bottom: 1em;
+}
+
+.tekserve-celebros-related-items-single-data-title {
+	font-weight: bold;
+	font-size: 1.1em;
+}
+
+.tekserve-celebros-related-items-single-data {
+	margin: .5em 0;
+}
+
+.tekserve-celebros-related-items-single-image {
+	margin-top: 1em;
+}
+
+.tekserve-celebros-related-items-single-data-domain {
+	text-transform: lowercase;
+	font-size: .75em;
+}
+
+.tekserve-celebros-related-items-single-data-buy .price {
+	font-size: 2em;
+	font-weight: 900;
+}
+
+.tekserve-celebros-related-items-single-data-buy .button,
+.tekserve-celebros-related-items-single-data-readmore .button {
+	color: #fff;
+	background: #ccc;
+	font-size: 2em;
+	font-weight: 900;
+	padding: .5em;
+	display: inline-block;
+}
+
+a:hover .tekserve-celebros-related-items-single-data-buy .button,
+a:hover .tekserve-celebros-related-items-single-data-readmore .button {
+	background: #888;
+}

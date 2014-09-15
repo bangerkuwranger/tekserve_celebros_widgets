@@ -25,9 +25,30 @@ class Tekserve_Celebros_Widget extends WP_Widget {
 	public function widget( $args, $instance ) {
 		//enqueue js for content retrieval, send needed vars to js, add css for widget display
 		
+		//get post id, post title, default display options, and post display options
+		global $wp_query;
+		$post_obj = $wp_query->get_queried_object();
+		$this_post_id = $post_obj->ID;
+		$this_post_title = $post_obj->post_title;
+		
+		$default_display_option = get_option('tekserve_celebros_' . $instance['type'] . '_display_option');
+		$post_display_option = get_post_meta( $this_post_id, 'tekserve_celebros_' . $instance['type'] . '_display', true );
+		if( $post_display_option == null || $post_display_option == '' || $post_display_option == 'default' ) {
+			$post_display_option = $default_display_option;
+		}
+		if( $post_display_option == 'keywords' ) {
+			$related_keywords = get_post_meta( $this_post_id, 'tekserve_celebros_' . $instance['type'] . '_keywords', false );
+			$related_keywords = $related_keywords[0];
+// 			$related_keywords_count = count( $related_keywords );
+		}
+		else {
+			$related_keywords = false;
+// 			$related_keywords_count = 0;
+		}
+		
 		//add get option #ofresults for both types of data here to pass in localize; hardcoded for now
-		$productsper = 3;
-		$contentsper = 3;
+		$productsper = get_option( 'tekserve_celebros_product_display_number' );
+		$contentsper = get_option( 'tekserve_celebros_content_display_number' );
 		$loader = QWISER_URL . 'images/ajax-loader.gif';
 		//check for theme override of plugin loader image
 		if( file_exists( get_stylesheet_directory() . '/images/ajax-loader.gif' ) ) {
@@ -49,26 +70,7 @@ class Tekserve_Celebros_Widget extends WP_Widget {
 		wp_enqueue_script( 'celebroswidgetsjs', QWISER_URL . 'tekserve-celebros-widgets.js', array('jquery'), '', true );
 		wp_localize_script( 'celebroswidgetsjs', 'qwiserData', $qwiser_js_data );
 		
-		//get post id, post title, default display options, and post display options
-		global $wp_query;
-		$post_obj = $wp_query->get_queried_object();
-		$this_post_id = $post_obj->ID;
-		$this_post_title = $post_obj->post_title;
-		
-		$default_display_option = get_option('tekserve_celebros_' . $instance['type'] . '_display_option');
-		$post_display_option = get_post_meta( $this_post_id, 'tekserve_celebros_' . $instance['type'] . '_display', true );
-		if( $post_display_option == null || $post_display_option == '' || $post_display_option == 'default' ) {
-			$post_display_option = $default_display_option;
-		}
-		if( $post_display_option == 'keywords' ) {
-			$related_keywords = get_post_meta( $this_post_id, 'tekserve_celebros_' . $instance['type'] . '_keywords', false );
-			$related_keywords = $related_keywords[0];
-// 			$related_keywords_count = count( $related_keywords );
-		}
-		else {
-			$related_keywords = false;
-// 			$related_keywords_count = 0;
-		}
+
 		
 		//create title based on widget type
 		$title = '';
@@ -91,11 +93,12 @@ class Tekserve_Celebros_Widget extends WP_Widget {
 // 			$html_structure .= print_r($related_keywords,true);
 			$i=1;
 			foreach( $related_keywords as $keyword ) {
-				
-				$html_structure .= '<div class="tekserve-celebros-related-items-section ' . numToOrdinalWord($i) . '" qwiserquery="' . urlencode( $keyword ) . '">';
-				$html_structure .= '<p class="tekserve-celebros-related-items-section-title"><strong>' . ucwords( $keyword ) . '</strong></p>';
-				$html_structure .= '<div class="tekserve-celebros-related-items-section-content"></div>';
-				$html_structure .= '</div>';
+				if( $keyword != '' && $keyword != null ) {
+					$html_structure .= '<div class="tekserve-celebros-related-items-section ' . numToOrdinalWord($i) . '" qwiserquery="' . urlencode( $keyword ) . '">';
+					$html_structure .= '<p class="tekserve-celebros-related-items-section-title"><strong>' . ucwords( $keyword ) . '</strong></p>';
+					$html_structure .= '<div class="tekserve-celebros-related-items-section-content"></div>';
+					$html_structure .= '</div>';
+				}
 				$i++;
 			}
 		}
