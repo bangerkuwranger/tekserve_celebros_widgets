@@ -10,7 +10,7 @@ $j(window).bind('load', function() {
 	
 		if ($j(this).hasClass('related-product')) {
 
-			var profile = 'Products';
+			var profile = 'SiteDefault';
 			var pageSize = parseInt(qwiserData.numProductsToDisplay, 10);
 
 		} //end if ($j(this).hasClass('related-product'))

@@ -3,7 +3,7 @@
 Plugin Name: Tekserve Celebros Widgets
 Plugin URI: https://github.com/bangerkuwranger/tekserve_celebros_widgets
 Description: Retrieves related products/data from celebros based on current post title/keywords. API portions © Celebros.
-Version: 0.0.1
+Version: 0.0.2
 Author: Chad A. Carino
 Author URI: http://www.chadacarino.com
 License: MIT
