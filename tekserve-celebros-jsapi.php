@@ -26,9 +26,10 @@ $searchinfo = $results->SearchInformation;
 
 echo '<div class="tekserve-celebros-related-items-single">';
 
-echo $results->Products->Items;
+// echo $results->Products->Items;
+// var_dump($results->Products->Items);
 
-/*
+
 
 foreach( $results->Products->Items as $product ): ?>
 	<?php $url = str_replace( 'tekserve.corrastage.com', 'shop.tekserve.com', $product->Field['link'] ) ?>
@@ -108,5 +109,5 @@ foreach( $results->Products->Items as $product ): ?>
 	</a>
 <?php 
 endforeach;
-*/
+
 echo '</div>';
