@@ -4,9 +4,11 @@
 
 //generates html for the test panel menu page
 function tekserve_celebros_test_panel_menu_page( $handle = NULL, $operation = NULL ) {
+
 	global $wpdb;
 	$api = $GLOBALS['QWISER'];
-	if ( ! empty( $_POST ) && check_admin_referer( 'performoperation', 'celebrostestpanel' ) ) {
+	if( ! empty( $_POST ) && check_admin_referer( 'performoperation', 'celebrostestpanel' ) ) {
+	
 		echo "POST: <br/>";
 		$q = (isset($_POST['celebros_search_query'])) ? sanitize_text_field( $_POST['celebros_search_query'] ) : NULL;
 		$operation = (isset($_POST['celebros_operation'])) ? sanitize_text_field( $_POST['celebros_operation'] ) : NULL;
@@ -16,63 +18,62 @@ function tekserve_celebros_test_panel_menu_page( $handle = NULL, $operation = NU
 		$sortfield = (isset($_POST['celebros_product_fields'])) ? sanitize_text_field( $_POST['celebros_product_fields'] ) : NULL;
 		$newsortdir = (isset($_POST['celebros_product_sortdir'])) ? sanitize_text_field( $_POST['celebros_product_sortdir'] ) : NULL;
 
-		switch($operation) {
+		switch( $operation ) {
+		
 			case "Search":
-				$results = $api->Search($q)->results;
+				$results = $api->Search( $q )->results;
 				$handle = $results->GetSearchHandle();
 				$searchinfo = $results->SearchInformation;
 				break;
 			case "ActivateProfile":
-				$results = $api->ActivateProfile($oldhandle, $newprofile)->results;
+				$results = $api->ActivateProfile( $oldhandle, $newprofile )->results;
 				$handle = $results->GetSearchHandle();
 				$searchinfo = $results->SearchInformation;
 				break;
 			case "ChangePageSize":
-				$results = $api->ChangePageSize($oldhandle, $newpagesize)->results;
+				$results = $api->ChangePageSize( $oldhandle, $newpagesize )->results;
 				$handle = $results->GetSearchHandle();
 				$searchinfo = $results->SearchInformation;
 				break;
 			case "FirstPage":
-				$results = $api->FirstPage($oldhandle)->results;
+				$results = $api->FirstPage( $oldhandle )->results;
 				$handle = $results->GetSearchHandle();
 				$searchinfo = $results->SearchInformation;
 				break;
 			case "LastPage":
-				$results = $api->LastPage($oldhandle)->results;
+				$results = $api->LastPage( $oldhandle )->results;
 				$handle = $results->GetSearchHandle();
 				$searchinfo = $results->SearchInformation;
 				break;
 			case "PreviousPage":
-				$results = $api->PreviousPage($oldhandle)->results;
+				$results = $api->PreviousPage( $oldhandle )->results;
 				$handle = $results->GetSearchHandle();
 				$searchinfo = $results->SearchInformation;
 				break;
 			case "NextPage":
-				$results = $api->NextPage($oldhandle)->results;
+				$results = $api->NextPage( $oldhandle )->results;
 				$handle = $results->GetSearchHandle();
 				$searchinfo = $results->SearchInformation;
 				break;
 			case "SortByField":
-				$results = $api->SortByField($oldhandle, $sortfield, false, $newsortdir)->results;
+				$results = $api->SortByField( $oldhandle, $sortfield, false, $newsortdir )->results;
 				$handle = $results->GetSearchHandle();
 				$searchinfo = $results->SearchInformation;
 				break;
 			case "SortByPrice":
-				$results = $api->SortByPrice($oldhandle, $newsortdir)->results;
+				$results = $api->SortByPrice( $oldhandle, $newsortdir )->results;
 				$handle = $results->GetSearchHandle();
 				$searchinfo = $results->SearchInformation;
 				break;
 			case "SortByRelevancy":
-				$results = $api->SortByRelevancy($oldhandle)->results;
+				$results = $api->SortByRelevancy( $oldhandle )->results;
 				$handle = $results->GetSearchHandle();
 				$searchinfo = $results->SearchInformation;
 				break;
-		}
-	
+				
+		}	//end switch( $operation )
 
-// 		var_dump($api);
-// 		var_dump($results);
-	}
+	}	//end if( ! empty( $_POST ) && check_admin_referer( 'performoperation', 'celebrostestpanel' ) )
 	?>
 	<style>
 	.hidden-fields select,
@@ -121,11 +122,8 @@ function tekserve_celebros_test_panel_menu_page( $handle = NULL, $operation = NU
 		</tr>
 	</table>
 	<h3>Test Operations:</h3>
-	
-
-	
-	<?php if( isset( $handle ) && isset( $operation ) ): ?>
-	
+	<?php if( isset( $handle ) && isset( $operation ) ): 
+	?>
 	<p>
 		PAGE <b><?php echo $searchinfo->CurrentPage ?></b> of <b><?php echo $searchinfo->NumberOfPages ?></b>
 	</p>
@@ -146,8 +144,6 @@ function tekserve_celebros_test_panel_menu_page( $handle = NULL, $operation = NU
 		'Search'			=> 'New Search'
 	) ?>
 	
-
-	
 	<form id="celebros_operation" method="POST" action="">
 		<?php wp_nonce_field( 'performoperation', 'celebrostestpanel' ) ?>
 		<div class="visible-fields">
@@ -162,52 +158,56 @@ function tekserve_celebros_test_panel_menu_page( $handle = NULL, $operation = NU
 			<br/>
 			<label for="celebros_operation" style="font-weight: 900">Operation:</label>
 			<select type="text" id="celebros_operation" name="celebros_operation" style="font-weight: 900">
-			<?php foreach( $operations as $o=>$label ): ?>
+			<?php foreach( $operations as $o=>$label ): 
+			?>
 				<option <?php echo ($operation == $o) ? 'selected="selected"' : '' ?> value="<?php echo $o ?>"><?php echo $label ?></option>
-			<?php endforeach ?>
+			<?php 
+			endforeach ?>
 			</select>
 			<br/>
 		</div>
 		<div class="hidden-fields">
+			<?php $profiles = $api->GetAllSearchProfiles()->results ?>
+			<label for="celebros_profiles">Select New Search Profile:</label>
+			<select type="text" id="celebros_profiles" name="celebros_profiles">
+				<?php foreach( $profiles as $profile ): 
+				?>
+					<option value="<?php echo $profile ?>"><?php echo $profile ?></option>
+				<?php 
+				endforeach ?>
+			</select>
+
+
+			<label for="celebros_search_perpage">Enter Number of Results Per Page:</label>
+			<input readonly type="number" id="celebros_search_perpage" name="celebros_search_perpage" value="<?php echo $searchinfo->PageSize ?>" />
+
+
+			<?php $currentdir = ($searchinfo->SortingOptions->Ascending) ? 'ASC' : 'DESC' ?>
+			<label for="celebros_product_sortdir">Change Sort Direction:</label>
+			<select type="text" id="celebros_product_sortdir" name="celebros_product_sortdir">
+				<option value="true" <?php echo ($currentdir == 'ASC') ? 'selected="selected"' : '' ?>>Ascending</option>
+				<option value="false" <?php echo ($currentdir == 'DESC') ? 'selected="selected"' : '' ?>>Descending</option>
+			</select>
+			<br/>
 		
-		<?php $profiles = $api->GetAllSearchProfiles()->results ?>
-		<label for="celebros_profiles">Select New Search Profile:</label>
-		<select type="text" id="celebros_profiles" name="celebros_profiles">
-			<?php foreach( $profiles as $profile ): ?>
-				<option value="<?php echo $profile ?>"><?php echo $profile ?></option>
-			<?php endforeach ?>
-		</select>
-
-
-		<label for="celebros_search_perpage">Enter Number of Results Per Page:</label>
-		<input readonly type="number" id="celebros_search_perpage" name="celebros_search_perpage" value="<?php echo $searchinfo->PageSize ?>" />
-
-
-		<?php $currentdir = ($searchinfo->SortingOptions->Ascending) ? 'ASC' : 'DESC' ?>
-		<label for="celebros_product_sortdir">Change Sort Direction:</label>
-		<select type="text" id="celebros_product_sortdir" name="celebros_product_sortdir">
-			<option value="true" <?php echo ($currentdir == 'ASC') ? 'selected="selected"' : '' ?>>Ascending</option>
-			<option value="false" <?php echo ($currentdir == 'DESC') ? 'selected="selected"' : '' ?>>Descending</option>
-		</select>
-		<br/>
-		
-		<?php $pfields = $api->GetAllProductFields()->results->Items ?>
-		<label for="celebros_product_fields">Select Product Field to Sort By:</label>
-		<select type="text" id="celebros_product_fields" name="celebros_product_fields">
-			<?php foreach( $pfields as $field ): ?>
-				<option value="<?php echo $field->FieldName ?>"><?php echo $field->FieldName ?></option>
-			<?php endforeach ?>
-		</select>
-
-
+			<?php $pfields = $api->GetAllProductFields()->results->Items ?>
+			<label for="celebros_product_fields">Select Product Field to Sort By:</label>
+			<select type="text" id="celebros_product_fields" name="celebros_product_fields">
+				<?php foreach( $pfields as $field ): 
+				?>
+					<option value="<?php echo $field->FieldName ?>"><?php echo $field->FieldName ?></option>
+				<?php
+				endforeach ?>
+			</select>
 		</div>
 		<input type="submit" value="Operate" />
 	</form>
 	
 	<script type="text/javascript">
 		function visibleFields(operation) {
-// 			alert('changed to: ' + operation);
+		
 			switch(operation) {
+			
 				case "Search" :
 					jQuery('.hidden-fields select, .hidden-fields label, .hidden-fields input').hide().prop('readonly', true);
 					jQuery('#celebros_search_query').prop('readonly', false);
@@ -241,20 +241,32 @@ function tekserve_celebros_test_panel_menu_page( $handle = NULL, $operation = NU
 					jQuery('.hidden-fields select, .hidden-fields label, .hidden-fields input').hide().prop('readonly', true);
 					jQuery('#celebros_search_query').prop('readonly', true);
 					jQuery('#celebros_search_query, label[for="celebros_search_query"]').css('fontWeight', 'normal');
-			}
-		}
+			
+			}	//end switch(operation)
+		
+		}	//end visibleFields(operation)
+		
+		
+		
 		jQuery('#celebros_operation').change(function() {
+		
 			var o = jQuery('#celebros_operation option:selected').val();
 			visibleFields(o);
-		});
-		jQuery(function(){
+			
+		});	//end jQuery('#celebros_operation').change(function()
+		
+		
+		
+		jQuery(function() {
+		
 			var o = jQuery('#celebros_operation option:selected').val();
 			visibleFields(o);
-		});
+		
+		});	//end jQuery(function()
 	</script>
 	
-	<?php else: ?>
-	
+	<?php else: 
+	?>
 	<?php $operations = array(
 		'Search'	=> 'New Search'
 	) ?>
@@ -267,9 +279,11 @@ function tekserve_celebros_test_panel_menu_page( $handle = NULL, $operation = NU
 			<br/>
 			<label for="celebros_operation">Operation:</label>
 			<select readonly type="text" id="celebros_operation" name="celebros_operation">
-			<?php foreach( $operations as $o=>$label ): ?>
+			<?php foreach( $operations as $o=>$label ): 
+			?>
 				<option value="<?php echo $o ?>"><?php echo $label ?></option>
-			<?php endforeach ?>
+			<?php
+			endforeach ?>
 			</select>
 			<br/>
 		</div>
@@ -277,55 +291,68 @@ function tekserve_celebros_test_panel_menu_page( $handle = NULL, $operation = NU
 		</div>
 		<input type="submit" value="Operate" />
 	</form>
-	
-	<?php endif ?>
-	
-	<?php if( isset( $api->current_response ) ): ?>
+	<?php 
+	endif ?>
+	<?php if( isset( $api->current_response ) ): 
+	?>
 	<h3>Current Response:</h3>
 	<div class="api-response">
 		<?php echo $api->current_response ?>
 	</div>
-	<?php endif ?>
-	
-	
-	<?php if( isset( $api->results ) || isset( $results ) ): ?>
+	<?php
+	endif ?>
+	<?php if( isset( $api->results ) || isset( $results ) ):
+	?>
 	<h3>Results:</h3>
 	<div class="api-results">
-		 <?php  
-		 foreach( $results->Products->Items as $product ): ?>
+		 <?php foreach( $results->Products->Items as $product ): 
+		 ?>
 		 	<div class="product">
 		 		<h4><?php echo $product->Field['sku']; ?></h4>
-		 		<?php foreach( $product->Field as $field=>$value ): ?>
-		 			<?php if( $field != "sku" && isset( $value ) && $value != '' ): ?>
-		 				<?php if( $field == "link" ): ?>
+		 		<?php foreach( $product->Field as $field=>$value ): 
+		 		?>
+		 			<?php if( $field != "sku" && isset( $value ) && $value != '' ): 
+		 			?>
+		 				<?php if( $field == "link" ): 
+		 				?>
 		 				<div class="product-field">
 		 					<b><?php echo $field ?>:</b>
 		 					<br/> 
 		 					<a href="<?php echo str_replace( 'tekserve.corrastage.com', 'shop.tekserve.com', $value ) ?>" target="_blank"><?php echo $value ?></a>
 		 				</div>
-		 				<?php elseif( $field == "thumbnail" || $field == "image_link" || $field == "small_image" ): ?>
+		 				<?php 
+		 				elseif( $field == "thumbnail" || $field == "image_link" || $field == "small_image" ): 
+		 				?>
 		 				<div class="product-field">
 		 					<b><?php echo $field ?>:</b>
 		 					<br/> 
 		 					<a href="<?php echo str_replace( 'cdn.tekserve.corrastage.com', 'shop.tekserve.com', $value ) ?>" target="_blank"><img src="<?php echo str_replace( 'cdn.tekserve.corrastage.com', 'shop.tekserve.com', $value ) ?>" /><br/><?php echo $value ?></a>
 		 				</div>
-		 				<?php else: ?>
+		 				<?php 
+		 				else: 
+		 				?>
 		 				<div class="product-field">
 		 					<b><?php echo $field ?>:</b>
 		 					<br/> 
 		 					<?php echo substr( $value, 0 , 90 ) ?>
 		 					<?php echo ( strlen( $value ) > 90 ) ? '[...]' : '' ?>
 		 				</div>
-		 				<?php endif ?>
-		 			<?php endif ?>
-		 		<?php endforeach ?>
+		 				<?php
+		 				endif ?>
+		 			<?php 
+		 			endif ?>
+		 		<?php 
+		 		endforeach ?>
 		 	</div>
 		 	<br/>
-		 <?php endforeach ?>
+		 <?php 
+		 endforeach ?>
 		<h3>raw:</h3>
-		<?php print_r($results) ?>
+		<?php print_r( $results ) ?>
 	</div>
-	<?php endif ?>
+	<?php 
+	endif ?>
 	
 	<?php
-}
+
+}	//end tekserve_celebros_test_panel_menu_page( $handle = NULL, $operation = NULL )
